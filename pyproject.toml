@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "py-avatar"
+version = "0.1.0"
+description = ""
+authors = ["Robert Bock"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+psutil = "^5.9.7"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.12.1"
+pytest = "^7.4.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
