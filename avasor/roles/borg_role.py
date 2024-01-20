@@ -92,10 +92,10 @@ class BorgRole(Role):
         return borg_archives
 
     def _run_check(self):
-        proc = subprocess.run([BORG_COMMAND, "check", "--archives-only", "-vv", BORG_REPO], stdout=subprocess.PIPE)
+        proc = subprocess.run([BORG_COMMAND, "check", "--archives-only", "-vv", BORG_REPO], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         proc.check_returncode()
         
-        for line in proc.stdout.split(os.linesep):
+        for line in proc.stderr.split(bytes(os.linesep)):
             if line == ARCHIVES_OK_MESSAGE:
                 return True
         

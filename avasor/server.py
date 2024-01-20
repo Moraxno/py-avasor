@@ -54,6 +54,8 @@ def handle_connection(connection: "Connection"):
             connection.close()
             os.kill(os.getppid(), signal.SIGTERM)
             break
+        except:
+            connection.send(None)
     
     logger.info("Connection closed. Shutting down thread.")
 
