@@ -65,7 +65,10 @@ def main():
     global logger
     
     signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGBREAK, signal_handler)
+    try:
+        signal.signal(signal.SIGBREAK, signal_handler)
+    except:
+        pass
     
     args = parse_command_line()
     prepare_logging(args)

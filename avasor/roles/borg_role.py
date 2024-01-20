@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-import datetime
+from datetime import datetime
 import json
 import os
 from avasor.roles.role import Role
@@ -16,8 +16,8 @@ class GigaBytes(float):
     def from_bytes(bytes: int):
         return GigaBytes(bytes / 1024**3)
 
-def parse_borg_time(time_str: str) -> datetime.datetime:
-    return datetime.datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%f")
+def parse_borg_time(time_str: str) -> datetime:
+    return datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%f")
 
 @dataclass
 class BorgInfo:
