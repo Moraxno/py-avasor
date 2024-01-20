@@ -31,7 +31,7 @@ class BorgArchive:
     name: str
     last_modified: datetime
     
-ARCHIVES_OK_MESSAGE = b"Archive consistency check complete, no problems found."
+ARCHIVES_OK_MESSAGE = b"check complete, no problems found."
 
 class BorgRoleCommand(Enum):
     INFO = 0
@@ -96,7 +96,7 @@ class BorgRole(Role):
         proc.check_returncode()
         
         for line in proc.stderr.split(bytes(os.linesep)):
-            if line == ARCHIVES_OK_MESSAGE:
+            if ARCHIVES_OK_MESSAGE in line:
                 return True
         
         return False
