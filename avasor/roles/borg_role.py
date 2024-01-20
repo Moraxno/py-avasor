@@ -62,8 +62,8 @@ class BorgRole(Role):
         
         edit_time = BorgRole.extract_last_modified_time(proc_result)
         uncompressed_size = BorgRole.extract_uncompressed_size(proc_result)
-        compressed_size = BorgRole.extract_uncompressed_size(proc_result)
-        deduped_size = BorgRole.extract_uncompressed_size(proc_result)
+        compressed_size = BorgRole.extract_compressed_size(proc_result)
+        deduped_size = BorgRole.extract_deduped_size(proc_result)
         
         borg_info = BorgInfo(
             edit_time,
