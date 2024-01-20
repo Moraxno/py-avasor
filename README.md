@@ -1,1 +1,1 @@
-# py-avatar
+# py-avasor

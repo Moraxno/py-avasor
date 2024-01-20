@@ -2,7 +2,7 @@ import datetime
 import json
 
 import pytest
-from avatar.roles.borg_role import BorgRole
+from avasor.roles.borg_role import BorgRole
 
 
 @pytest.fixture()

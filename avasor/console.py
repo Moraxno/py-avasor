@@ -6,7 +6,7 @@ import logging
 
 import signal
 import sys
-from avatar.base import prepare_logging
+from avasor.base import prepare_logging
 
 logger = None
 
@@ -18,7 +18,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def parse_command_line():
-    ap = argparse.ArgumentParser("Avatar Server")
+    ap = argparse.ArgumentParser("avasor Server")
     ap.add_argument("--address", default="localhost")
     ap.add_argument("--port", "-p", default=64123, type=int)
     ap.add_argument("--authkey", "-k", default=b"secret", type=bytes)

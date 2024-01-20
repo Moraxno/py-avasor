@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import datetime
 import json
 import os
-from avatar.roles.role import Role
+from avasor.roles.role import Role
 import subprocess
 from enum import StrEnum
 

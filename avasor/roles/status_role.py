@@ -2,7 +2,7 @@ import datetime
 import logging
 import psutil
 
-from avatar.roles.role import Role
+from avasor.roles.role import Role
 
 
 
