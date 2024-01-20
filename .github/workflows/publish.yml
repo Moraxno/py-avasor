@@ -32,4 +32,6 @@ jobs:
             - name: Build
               run: poetry build
             - name: Publish
-              run: poetry publish -r pypi -u __token__ -p ${{secrets.PYPI_API_TOKEN}}
+              run: |
+                poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+                poetry publish 
