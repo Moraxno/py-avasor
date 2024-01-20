@@ -4,7 +4,7 @@ import json
 import os
 from avasor.roles.role import Role
 import subprocess
-from enum import StrEnum
+from enum import Enum
 
 BORG_REPO = "/media/FileBackup/borg-repo/"
 BORG_COMMAND = "borg"
@@ -33,20 +33,26 @@ class BorgArchive:
     
 ARCHIVES_OK_MESSAGE = b"Archive consistency check complete, no problems found."
 
-class BorgRoleCommand(StrEnum):
-    INFO = "info"
-    LIST = "list"
-    CONSISTENCY = "consistency"
+class BorgRoleCommand(Enum):
+    INFO = 0
+    LIST = 1
+    CONSISTENCY = 2
     
 BRG = BorgRoleCommand
+    
+CMD_LOOKUP = {
+    BorgRoleCommand.INFO: "info",
+    BorgRoleCommand.LIST: "list",
+    BorgRoleCommand.CONSISTENCY: "consistency",
+}
 
 class BorgRole(Role):
     def __init__(self):
         super().__init__()
         
-        self.register_command(BRG.INFO, self._run_info)
-        self.register_command(BRG.LIST, self._run_list)
-        self.register_command(BRG.CONSISTENCY, self._run_check)
+        self.register_command(CMD_LOOKUP[BRG.INFO], self._run_info)
+        self.register_command(CMD_LOOKUP[BRG.LIST], self._run_list)
+        self.register_command(CMD_LOOKUP[BRG.CONSISTENCY], self._run_check)
 
     def _run_info(self):
         proc = subprocess.run([BORG_COMMAND, "info", "--json", BORG_REPO], stdout=subprocess.PIPE)
