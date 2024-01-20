@@ -14,9 +14,9 @@ jobs:
                 chmod +x ./setup.sh  
                 ./setup.sh
             - name: Install
-              run: poetry install --with dev
+              run: poetry install
             - name: Test
-              run: pytest .
+              run: poetry run pytest .
     publish:
         runs-on: ubuntu-latest
         needs: [test]
