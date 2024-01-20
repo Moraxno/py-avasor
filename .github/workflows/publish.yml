@@ -32,4 +32,4 @@ jobs:
             - name: Build
               run: poetry build
             - name: Publish
-              run: poetry publish -r pypi -u __token__ -p ${{env.PYPI_API_TOKEN}}
+              run: poetry publish -r pypi -u __token__ -p ${{secrets.PYPI_API_TOKEN}}
