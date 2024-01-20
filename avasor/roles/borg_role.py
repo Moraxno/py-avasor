@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 import datetime
 import json
+import os
 from avatar.roles.role import Role
 import subprocess
+from enum import StrEnum
 
 BORG_REPO = "/media/FileBackup/borg-repo/"
 BORG_COMMAND = "borg"
@@ -13,6 +15,9 @@ class GigaBytes(float):
     @staticmethod
     def from_bytes(bytes: int):
         return GigaBytes(bytes / 1024**3)
+
+def parse_borg_time(time_str: str) -> datetime.datetime:
+    return datetime.datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%f")
 
 @dataclass
 class BorgInfo:
@@ -25,13 +30,24 @@ class BorgInfo:
 class BorgArchive:
     name: str
     last_modified: datetime
+    
+ARCHIVES_OK_MESSAGE = b"Archive consistency check complete, no problems found."
+
+class BorgRoleCommand(StrEnum):
+    INFO = "info"
+    LIST = "list"
+    CONSISTENCY = "consistency"
+    
+BRG = BorgRoleCommand
 
 class BorgRole(Role):
     def __init__(self):
         super().__init__()
         
-        self.register_command("info", self._run_info)
-        
+        self.register_command(BRG.INFO, self._run_info)
+        self.register_command(BRG.LIST, self._run_list)
+        self.register_command(BRG.CONSISTENCY, self._run_check)
+
     def _run_info(self):
         proc = subprocess.run([BORG_COMMAND, "info", "--json", BORG_REPO], stdout=subprocess.PIPE)
         proc.check_returncode()
@@ -58,23 +74,30 @@ class BorgRole(Role):
         
         proc_result = json.loads(proc.stdout)
         
-        edit_time = BorgRole.extract_last_modified_time(proc_result)
-        uncompressed_size = BorgRole.extract_uncompressed_size(proc_result)
-        compressed_size = BorgRole.extract_uncompressed_size(proc_result)
-        deduped_size = BorgRole.extract_uncompressed_size(proc_result)
+        borg_archives = []
         
-        borg_info = BorgInfo(
-            edit_time,
-            uncompressed_size,
-            compressed_size,
-            deduped_size
-        )
+        for entry in proc_result["archives"]:
+            name = entry["name"]
+            time = parse_borg_time(entry["time"])
+            
+            borg_archive = BorgArchive(name, time)
+            borg_archives.append(borg_archive)
         
-        return borg_info
+        return borg_archives
+
+    def _run_check(self):
+        proc = subprocess.run([BORG_COMMAND, "check", "--archives-only", "-vv", BORG_REPO], stdout=subprocess.PIPE)
+        proc.check_returncode()
+        
+        for line in proc.stdout.split(os.linesep):
+            if line == ARCHIVES_OK_MESSAGE:
+                return True
+        
+        return False
 
     @staticmethod
     def extract_last_modified_time(proc_result):
-        return datetime.datetime.strptime(proc_result["repository"]["last_modified"], "%Y-%m-%dT%H:%M:%S.%f")
+        return parse_borg_time(proc_result["repository"]["last_modified"])
         
     @staticmethod
     def extract_uncompressed_size(proc_result):

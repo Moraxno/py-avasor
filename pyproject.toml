@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "avatar"
+name = "avasor"
 version = "0.1.0"
 description = ""
 authors = ["Robert Bock"]
