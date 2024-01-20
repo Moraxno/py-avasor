@@ -5,6 +5,7 @@ on:
 
 jobs:
     test:
+        environment: production
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -18,6 +19,7 @@ jobs:
             - name: Test
               run: poetry run pytest .
     publish:
+        environment: production
         runs-on: ubuntu-latest
         needs: [test]
         steps:
@@ -30,4 +32,4 @@ jobs:
             - name: Build
               run: poetry build
             - name: Publish
-              run: poetry publish -r pypi -u __token__ -p $(PYPI_API_TOKEN)
+              run: poetry publish -r pypi -u __token__ -p ${{env.PYPI_API_TOKEN}}
