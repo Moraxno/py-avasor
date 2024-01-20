@@ -5,6 +5,7 @@ import os
 import threading
 import logging
 from avasor.base import prepare_logging
+from avasor.roles.borg_role import BorgRole
 
 from avasor.roles.role import ClosedConnectionException, ShutdownServerException
 
@@ -33,13 +34,19 @@ def parse_command_line():
 def handle_connection(connection: "Connection"):
     logger.info("Connection accepted. New thread is now handling.")
     s = StatusRole()
+    b = BorgRole()
     
     while not connection.closed:
         msg = connection.recv()
         
         try:
+            # TODO: Make this iterate all roles
             result = s.handle_message(msg)
-            connection.send(result)
+            if result:
+                connection.send(result)
+            else:
+                result = b.handle_message(msg)
+                connection.send(result)
         except ClosedConnectionException:
             connection.close()
             break
