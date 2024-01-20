@@ -4,8 +4,16 @@ on:
             - main
 
 jobs:
+    setup:
+        runs-on: ubuntu-latest
+        steps:
+            - name: PipX
+              run: python3 -m pip install pipx
+            - name: Poetry
+              run: pipx install poetry
     test:
         runs-on: ubuntu-latest
+        needs: [setup]
         steps:
             - name: Install
               run: poetry install
@@ -13,6 +21,7 @@ jobs:
               run: pytest .
     publish:
         runs-on: ubuntu-latest
+        needs: [setup, test]
         steps:
             - name: Build
               run: poetry build
