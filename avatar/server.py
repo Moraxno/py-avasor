@@ -1,8 +1,12 @@
 import argparse
 import multiprocessing
 from multiprocessing.connection import Listener, Connection
+import os
 import threading
 import logging
+from avatar.base import prepare_logging
+
+from avatar.roles.role import ClosedConnectionException, ShutdownServerException
 
 import signal
 import sys
@@ -36,10 +40,14 @@ def handle_connection(connection: "Connection"):
         try:
             result = s.handle_message(msg)
             connection.send(result)
-        except RuntimeError:
+        except ClosedConnectionException:
             connection.close()
             break
-        
+        except ShutdownServerException:
+            connection.close()
+            os.kill(os.getppid(), signal.SIGTERM)
+            break
+    
     logger.info("Connection closed. Shutting down thread.")
 
 def handle_listener(listener: "Listener"):
@@ -60,7 +68,10 @@ def main():
     signal.signal(signal.SIGBREAK, signal_handler)
     
     args = parse_command_line()
-    logger = prepare_logger(args)
+    prepare_logging(args)
+    
+    logger = logging.getLogger(__file__)
+    
     listener = Listener((args.address, args.port), authkey=args.authkey)
     
     listener_thread = threading.Thread(target=handle_listener, args=(listener, ), daemon=True)
@@ -69,21 +80,6 @@ def main():
     while True:
         pass
         
-
-def prepare_logger(args):
-    base_level = logging.WARNING
-    offset = (args.quiet - args.verbose) * 10
-    log_level = base_level + offset
-    log_level = max(logging.DEBUG, min(logging.CRITICAL, log_level))
-    
-    logging.basicConfig(
-        level=log_level,
-        format="[%(levelname)8s] %(message)s"
-    )
-    
-    logger = logging.getLogger(__file__)
-    return logger
-    
 
 
 if __name__ == "__main__":

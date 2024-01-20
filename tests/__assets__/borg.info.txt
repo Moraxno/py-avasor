@@ -1,0 +1,22 @@
+{
+    "cache": {
+        "path": "/root/.cache/borg/65dd42fb326637b258ca1be52c9eb371cfb391c255fd9a43a053d48f6ddcfe33",
+        "stats": {
+            "total_chunks": 829775,
+            "total_csize": 257222411750,
+            "total_size": 399677665438,
+            "total_unique_chunks": 108416,
+            "unique_csize": 39095180520,
+            "unique_size": 58052458456
+        }
+    },
+    "encryption": {
+        "mode": "none"
+    },
+    "repository": {
+        "id": "65dd42fb326637b258ca1be52c9eb371cfb391c255fd9a43a053d48f6ddcfe33",
+        "last_modified": "2024-01-20T16:00:51.000000",
+        "location": "/media/FileBackup/borg-repo"
+    },
+    "security_dir": "/root/.config/borg/security/65dd42fb326637b258ca1be52c9eb371cfb391c255fd9a43a053d48f6ddcfe33"
+}

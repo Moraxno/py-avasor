@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "py-avatar"
+name = "avatar"
 version = "0.1.0"
 description = ""
 authors = ["Robert Bock"]

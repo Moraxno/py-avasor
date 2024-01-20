@@ -1,0 +1,76 @@
+{
+    "archives": [
+        {
+            "archive": "Initial",
+            "barchive": "Initial",
+            "id": "529a9190bd3292dd603ec37264ae224186962c95558bc2f6b54db3be898afd21",
+            "name": "Initial",
+            "start": "2024-01-17T15:00:11.000000",
+            "time": "2024-01-17T15:00:11.000000"
+        },
+        {
+            "archive": "design-2024-01-17T15:05:34",
+            "barchive": "design-2024-01-17T15:05:34",
+            "id": "16495f6f8c68e0066131ea4eaebddbbfd4df086b295c9aa66fa6401c86edc34e",
+            "name": "design-2024-01-17T15:05:34",
+            "start": "2024-01-17T15:05:34.000000",
+            "time": "2024-01-17T15:05:34.000000"
+        },
+        {
+            "archive": "design-2024-01-17T22:00:02",
+            "barchive": "design-2024-01-17T22:00:02",
+            "id": "36fad7e92138c98a830158e232d9c8dc915825b788fbc4d96ff53e1f798ee634",
+            "name": "design-2024-01-17T22:00:02",
+            "start": "2024-01-17T22:00:05.000000",
+            "time": "2024-01-17T22:00:05.000000"
+        },
+        {
+            "archive": "design-2024-01-18T22:00:02",
+            "barchive": "design-2024-01-18T22:00:02",
+            "id": "740963dbb21f73a1d68a65396508dc47d6bb6790aee9954a8de012c10cc0104a",
+            "name": "design-2024-01-18T22:00:02",
+            "start": "2024-01-18T22:00:05.000000",
+            "time": "2024-01-18T22:00:05.000000"
+        },
+        {
+            "archive": "design-2024-01-19T22:00:02",
+            "barchive": "design-2024-01-19T22:00:02",
+            "id": "4c52a760129b75e8aeed9bab87be6daf72862ce0a67c0d499b18831c00d920ea",
+            "name": "design-2024-01-19T22:00:02",
+            "start": "2024-01-19T22:00:05.000000",
+            "time": "2024-01-19T22:00:05.000000"
+        },
+        {
+            "archive": "design-2024-01-20T04:00:02",
+            "barchive": "design-2024-01-20T04:00:02",
+            "id": "79c90d1618b69433aac725a7d9a809748b85f26b4bc008cb8bcf1dd73fa5c667",
+            "name": "design-2024-01-20T04:00:02",
+            "start": "2024-01-20T04:00:05.000000",
+            "time": "2024-01-20T04:00:05.000000"
+        },
+        {
+            "archive": "design-2024-01-20T10:00:02",
+            "barchive": "design-2024-01-20T10:00:02",
+            "id": "a6bceeaadc70c50896c3b66237dc966e2efa6702910ca9ff3e570ba22e532cab",
+            "name": "design-2024-01-20T10:00:02",
+            "start": "2024-01-20T10:00:05.000000",
+            "time": "2024-01-20T10:00:05.000000"
+        },
+        {
+            "archive": "design-2024-01-20T16:00:01",
+            "barchive": "design-2024-01-20T16:00:01",
+            "id": "85fe4962c44e323335a8bdd56d21190c9040f7d092953e9eed3f250e0e8e3f49",
+            "name": "design-2024-01-20T16:00:01",
+            "start": "2024-01-20T16:00:04.000000",
+            "time": "2024-01-20T16:00:04.000000"
+        }
+    ],
+    "encryption": {
+        "mode": "none"
+    },
+    "repository": {
+        "id": "65dd42fb326637b258ca1be52c9eb371cfb391c255fd9a43a053d48f6ddcfe33",
+        "last_modified": "2024-01-20T16:00:51.000000",
+        "location": "/media/FileBackup/borg-repo"
+    }
+}

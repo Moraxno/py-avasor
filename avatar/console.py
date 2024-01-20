@@ -6,6 +6,7 @@ import logging
 
 import signal
 import sys
+from avatar.base import prepare_logging
 
 logger = None
 
@@ -34,41 +35,39 @@ def main():
     signal.signal(signal.SIGBREAK, signal_handler)
     
     args = parse_command_line()
-    logger = prepare_logger(args)
+    prepare_logging(args)
+    logger = logging.getLogger(__file__)
     
     logger.info("logger ready")
     
-    client = Client((args.address, args.port), authkey=args.authkey)
     
-    logger.info("Client ready")
-    
-    while not client.closed:
-        msg = input("$ ")
+    while True:
         try:
-            client.send(msg)
-            answer = client.recv()
-        except EOFError:
-            print("! The server has ended the communication.")
-            client.close()
-            break
+            client = Client((args.address, args.port), authkey=args.authkey)
+        except ConnectionRefusedError:
+            logger.warning("Server is not responding, trying again.")
+            continue
+        except ConnectionResetError:
+            logger.warning("Server denies the communication.")
+            continue
             
-        print(f"> {answer}")
-        
+        logger.info("Client ready")
+    
+        while not client.closed:
+            msg = input("$ ")
+            try:
+                client.send(msg)
+                answer = client.recv()
+            except EOFError:
+                logger.warning("Communication ended.")
+                client.close()
+                break
+            except ConnectionResetError:
+                logger.warning("Server ended the communication.")
+                break
+                
+            print(f"> {answer}")
 
-def prepare_logger(args):
-    base_level = logging.WARNING
-    offset = (args.quiet - args.verbose) * 10
-    log_level = base_level + offset
-    log_level = max(logging.DEBUG, min(logging.CRITICAL, log_level))
-    
-    logging.basicConfig(
-        level=log_level,
-        format="[%(levelname)8s] %(message)s"
-    )
-    
-    logger = logging.getLogger(__file__)
-    return logger
-    
 
 
 if __name__ == "__main__":
